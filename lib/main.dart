@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 
 import './quiz.dart';
 import './result.dart';
+import 'home.dart';
+import 'shop.dart';
 
 void main() => runApp(MyApp());
 
@@ -41,19 +43,16 @@ class _MyAppState extends State<MyApp> {
     },
   ];
 
-  var _totalScore= 0;
+  var _totalScore = 0;
 
-  void _reStart(){
-
+  void _reStart() {
     setState(() {
       _totalScore = 0;
       numberIndex = 0;
     });
-
   }
 
   void tapButton(int score) {
-
     _totalScore += score;
 
     setState(() {
@@ -65,18 +64,21 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text("My Flutter App"),
-        ),
-        body: numberIndex < numberList.length
-            ? Quiz(
-                number: numberList,
-                numberIndex: numberIndex,
-                tapButton: tapButton,
-              )
-            : Result(_totalScore,_reStart),
-      ),
+      // home: Shop(),
+      home: Home(),
     );
+
+    // Scaffold(
+    //   appBar: AppBar(
+    //     title: Text("My Flutter App"),
+    //   ),
+    //   body: numberIndex < numberList.length
+    //       ? Quiz(
+    //           number: numberList,
+    //           numberIndex: numberIndex,
+    //           tapButton: tapButton,
+    //         )
+    //       : Result(_totalScore,_reStart),
+    // ),
   }
 }
