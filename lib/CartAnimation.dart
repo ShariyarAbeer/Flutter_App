@@ -11,8 +11,10 @@ class CartAnimation extends StatefulWidget {
   final double dxCurveAnimation;
   final double dyCurveAnimation;
   final String image;
+  double initPos;
+  double ratio = 1.0;
 
-  const CartAnimation({
+  CartAnimation({
     Key key,
     @required this.startPosition,
     @required this.endPosition,
@@ -59,12 +61,13 @@ class _CartAnimationPageState extends State<CartAnimation>
         setState(() {
           left = pow(1 - t, 2) * x0 + 2 * t * (1 - t) * x1 + pow(t, 2) * x2;
           top = pow(1 - t, 2) * y0 + 2 * t * (1 - t) * y1 + pow(t, 2) * y2;
+          widget.ratio = widget.initPos / top;
         });
     });
 
     // Initialize the position of the widget
     left = widget.startPosition.dx;
-    top = widget.startPosition.dy;
+    widget.initPos = top = widget.startPosition.dy;
 
     // The animation starts when the widget is displayed
     _controller.forward();
@@ -78,6 +81,9 @@ class _CartAnimationPageState extends State<CartAnimation>
 
   @override
   Widget build(BuildContext context) {
+    // print("Start");
+    // print(left);
+    // print(top);
     // Use Stack -> Positioned to control the position of the Widget
     return Stack(
       children: <Widget>[
@@ -88,8 +94,8 @@ class _CartAnimationPageState extends State<CartAnimation>
               opacity: widget.opacity,
               child: ClipOval(
                 child: Container(
-                  width: widget.height,
-                  height: widget.width,
+                  width: widget.height * widget.ratio,
+                  height: widget.width * widget.ratio,
                   decoration: BoxDecoration(
                     image: DecorationImage(
                         image: NetworkImage(widget.image), fit: BoxFit.fill),
